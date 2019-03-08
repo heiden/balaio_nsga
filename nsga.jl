@@ -10,7 +10,7 @@ qnt_ativos = length(ativos)
 pop = []
 for i in 1:tam_pop
 	a = gera_ativos(cardinalidade, qnt_ativos)
-	l = gera_lotes(cardinalidade, qnt_ativos, a)
+	l = gera_lotes(cardinalidade, qnt_ativos)
 	ind = Individuo(a, l)
 	push!(pop, ind)
 end
@@ -34,14 +34,14 @@ solver = NSGA(cx, mr, μ, σ, tam_pop, cardinalidade, pop)
 
 	if i % 50 == 0	println(i)	end
 
-	# pontos = fitness_populacao(solver)
+	pontos = fitness_populacao(solver)
 	# for p in pontos println(pontos) end
 
-	# fronteiras, indices = nds(pontos)
+	fronteiras, indices = nds(pontos)
 	# for f in fronteiras println(f) end
 	# for i in indices println(i) end
 
-	# selecao = torneio_binario(solver, fronteiras, indices)
+	selecao = torneio_binario(solver, fronteiras, indices)
 	# println(selecao)
 
 	# for x in solver.populacao println(x.ativos, " ", sum(x.lotes)) end
@@ -49,10 +49,10 @@ solver = NSGA(cx, mr, μ, σ, tam_pop, cardinalidade, pop)
 
 	# meu_crossover(solver, selecao)
 
-	for x in solver.populacao println(sum(x.ativos), " ", sum(x.lotes)) end
+	for x in solver.populacao println(sum(x.ativos), " ", x.lotes, " ", sum(x.lotes)) end
 	println(length(solver.populacao))
 	mutacao(solver)
-	for x in solver.populacao println(sum(x.ativos), " ", sum(x.lotes)) end
+	for x in solver.populacao println(sum(x.ativos), " ", x.lotes, " ", sum(x.lotes)) end
 	println(length(solver.populacao))
 
 	exit(0)

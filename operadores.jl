@@ -104,7 +104,8 @@ function mutacao(solver::NSGA)
     # reparar pegando um oposto e flipando ele tbm
     # ex: se o bit flip converter um 0 pra 1, precisa sortear um 1 e trocar pra 0
     # a ideia é manter a cardinalidade = k
-    tam = length(solver.populacao[1].ativos)
+    tama = length(solver.populacao[1].ativos)
+    taml = length(solver.populacao[1].lotes)
     for ind in solver.populacao
 		bit0s = findall(isequal(0), ind.ativos)
 		bit1s = findall(isequal(1), ind.ativos)
@@ -112,7 +113,7 @@ function mutacao(solver::NSGA)
     		ω = rand()
     		if ω < solver.mr
     			# ativos
-    			x = rand(1:tam)
+    			x = rand(1:tama)
     			if ind.ativos[x] == 0
     				era = 0
     				ind.ativos[x] = 1
@@ -137,6 +138,10 @@ function mutacao(solver::NSGA)
     				filter!(b -> b≠y, bit0s) # remove o indice y do vetor de zeros
     				push!(bit1s, y) 		 # adiciona o indice y no vetor de uns
     			end
+
+    			x = rand(1:taml)
+    			# implementar função de reparo (escolhe os caras pra zerar, e o resto pra decrementar)
+    			# refazer a inicialização dos lotes
 
     		end
     	end
