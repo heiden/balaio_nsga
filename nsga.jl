@@ -10,7 +10,7 @@ qnt_ativos = length(ativos)
 pop = []
 for i in 1:tam_pop
 	a = gera_ativos(cardinalidade, qnt_ativos)
-	l = gera_lotes(cardinalidade, qnt_ativos)
+	l = gera_lotes(cardinalidade, qnt_ativos, a)
 	ind = Individuo(a, l)
 	push!(pop, ind)
 end
@@ -33,6 +33,10 @@ solver = NSGA(cx, mr, μ, σ, tam_pop, cardinalidade, pop)
 	# println("cx: ", solver.cx, " mr: ", solver.mr)
 
 	if i % 50 == 0	println(i)	end
+	# println("============== : ", i)
+	# for ind in solver.populacao
+	# 	println(ind)
+	# end
 
 	pontos = fitness_populacao(solver)
 	# for p in pontos println(pontos) end
@@ -43,29 +47,35 @@ solver = NSGA(cx, mr, μ, σ, tam_pop, cardinalidade, pop)
 
 	selecao = torneio_binario(solver, fronteiras, indices)
 	# println(selecao)
-
+	# println("passei da selecao")
 	# for x in solver.populacao println(x.ativos, " ", sum(x.lotes)) end
 	# println(length(solver.populacao))
+	# println(length(solver.populacao))
+	# for x in solver.populacao println(x.ativos, " ", x.lotes, " ", sum(x.lotes)) end
+	crossover(solver, selecao, solver.cardinalidade)
+	# println("passei do crossover")
+	# println(length(solver.populacao))
+	# for x in solver.populacao println(x.ativos, " ", x.lotes, " ", sum(x.lotes)) end
 
-	# meu_crossover(solver, selecao)
-
-	for x in solver.populacao println(sum(x.ativos), " ", x.lotes, " ", sum(x.lotes)) end
-	println(length(solver.populacao))
+	# for x in solver.populacao println(x.ativos, " ", x.lotes, " ", sum(x.lotes)) end
+	# println(length(solver.populacao))
 	mutacao(solver)
-	for x in solver.populacao println(sum(x.ativos), " ", x.lotes, " ", sum(x.lotes)) end
-	println(length(solver.populacao))
-
-	exit(0)
+	# println("passei da mutacao")
+	# for x in solver.populacao println(x.ativos, " ", x.lotes, " ", sum(x.lotes)) end
+	# println(length(solver.populacao))
 
 	pontos = fitness_populacao(solver)
 	fitness = copy(pontos)
 	fronteiras, indices = nds(pontos)
 	filtra_populacao(solver, fronteiras, indices, tam_pop, fitness)
+	# println("passei do filtro")
 
 end
-
 pontos = fitness_populacao(solver)
 fronteiras, indices = nds(pontos)
+for i in indices[1]
+	println(solver.populacao[i])
+end
 for f in fronteiras[1]
 	println(f)
 end

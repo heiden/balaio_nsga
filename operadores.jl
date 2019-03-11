@@ -226,7 +226,7 @@ function mutacao(solver::NSGA)
     		ω = rand()
     		if ω < solver.mr
 				pert = rand(d) / 100.0
-    			lotes_atuais[i] += pert
+				if lotes_atuais[i] + pert >= 0	lotes_atuais[i] += pert	   end
     		end
     	end
     	cunt = 0

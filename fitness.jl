@@ -1,10 +1,11 @@
 function fitness(solver::NSGA, ind)
 	risco, retorno = 0.0, 0.0
-	ativos = findall(isequal(1), ind.ativos)
-	for i in 1:length(ativos)
-		retorno += ind.lotes[i] * solver.μ[ativos[i]] 
-		risco   += ind.lotes[i] * solver.σ[ativos[i]]
-	end
+	for i in 1:length(ind.ativos)
+		if ind.ativos[i] == 1
+			retorno += ind.lotes[i] * solver.μ[i]
+			risco   += ind.lotes[i] * solver.σ[i]
+		end
+ 	end
  	return risco, retorno
 end
 
