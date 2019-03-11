@@ -12,10 +12,10 @@ end
 
 function le_ativos()
 	T, ativos = [], []
-	dir = "./ativos/in-sample/10/"
+	dir = "./ativos/in-sample/"
 	arqs = readdir(dir)
 
-	for i in 1:length(arqs)
+	for i in 2:length(arqs)
 		df = CSV.read(dir * arqs[i])
 		rename!(df, Symbol("Adj Close") => Symbol("Adj_Close"))
 		append!(T, CSV.nrow(df))
