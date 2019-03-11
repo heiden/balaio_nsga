@@ -104,16 +104,18 @@ function mutacao(solver::NSGA)
     # reparar pegando um oposto e flipando ele tbm
     # ex: se o bit flip converter um 0 pra 1, precisa sortear um 1 e trocar pra 0
     # a ideia é manter a cardinalidade = k
-    tama = length(solver.populacao[1].ativos)
-    taml = length(solver.populacao[1].lotes)
+
+	d = Normal(0.0, 1.0) # Normal(μ = 0.0, σ = 0.5), σ = 1.0 tbm deve funcionar
+    tam = length(solver.populacao[1].ativos)
     for ind in solver.populacao
 		bit0s = findall(isequal(0), ind.ativos)
 		bit1s = findall(isequal(1), ind.ativos)
+    	
+    	# ativos
     	for i in 1:tam
     		ω = rand()
     		if ω < solver.mr
-    			# ativos
-    			x = rand(1:tama)
+    			x = rand(1:tam)
     			if ind.ativos[x] == 0
     				era = 0
     				ind.ativos[x] = 1
@@ -139,12 +141,29 @@ function mutacao(solver::NSGA)
     				push!(bit1s, y) 		 # adiciona o indice y no vetor de uns
     			end
 
-    			x = rand(1:taml)
-    			# implementar função de reparo (escolhe os caras pra zerar, e o resto pra decrementar)
-    			# refazer a inicialização dos lotes
-
     		end
     	end
+
+    	# lotes
+    	# a ideia eh perturbar apenas os lotes ≠ 0
+    	lotes_atuais = filter(x->x≠0, ind.lotes)
+    	for i in 1:length(lotes_atuais)
+    		ω = rand()
+    		if ω < solver.mr
+				pert = rand(d) / 100.0
+    			lotes_atuais[i] += pert
+    		end
+    	end
+    	cont = 1
+    	for i in 1:tam
+    		if ind.ativos[i] == 1
+    			ind.lotes[i] = lotes_atuais[cont]
+    			cont += 1
+    		else
+    			ind.lotes[i] = 0
+    		end
+    	end
+    	ind.lotes /= sum(ind.lotes) # reparo bom, implementar o nojento dps
     end
 end
 
