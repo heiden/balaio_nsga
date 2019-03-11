@@ -12,21 +12,18 @@ end
 
 function gera_lotes(k, qnt, ativos)
     rng = MersenneTwisters.MT19937()
-    x = rand(rng, k)
-    x /= sum(x)
-    
-    y = []
-    cont = 1
-    for i in 1:length(ativos)
+    # x = rand(rng, k)
+    # x /= sum(x)
+    x = [0.0 for i in 1:qnt]
+
+    for i in 1:qnt
         if ativos[i] == 1
-            push!(y, x[cont])
-            cont += 1
-        else
-            push!(y, 0)
+            x[i] = rand(rng)
         end
     end
     
-    return y
+    x /= sum(x) # reparo decente, tem que implementar o lixoso de decrementar
+    return x
 end
 
 function filtra_populacao(solver::NSGA, frontiers, indexes, tam_pop, fitness)
