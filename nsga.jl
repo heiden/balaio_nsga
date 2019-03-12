@@ -53,6 +53,7 @@ solver = NSGA(cx, mr, μ, σ, tam_pop, cardinalidade, pop)
 	# println(length(solver.populacao))
 	# for x in solver.populacao println(x.ativos, " ", x.lotes, " ", sum(x.lotes)) end
 	crossover(solver, selecao, solver.cardinalidade)
+	# meu_crossover(solver, selecao)
 	# println("passei do crossover")
 	# println(length(solver.populacao))
 	# for x in solver.populacao println(x.ativos, " ", x.lotes, " ", sum(x.lotes)) end
@@ -60,6 +61,7 @@ solver = NSGA(cx, mr, μ, σ, tam_pop, cardinalidade, pop)
 	# for x in solver.populacao println(x.ativos, " ", x.lotes, " ", sum(x.lotes)) end
 	# println(length(solver.populacao))
 	mutacao(solver)
+	# minha_mutacao(solver, qnt_ativos)
 	# println("passei da mutacao")
 	# for x in solver.populacao println(x.ativos, " ", x.lotes, " ", sum(x.lotes)) end
 	# println(length(solver.populacao))
@@ -69,6 +71,10 @@ solver = NSGA(cx, mr, μ, σ, tam_pop, cardinalidade, pop)
 	fronteiras, indices = nds(pontos)
 	filtra_populacao(solver, fronteiras, indices, tam_pop, fitness)
 	# println("passei do filtro")
+
+	# for i in solver.populacao
+	# 	println(i)
+	# end
 
 end
 pontos = fitness_populacao(solver)

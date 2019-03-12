@@ -190,31 +190,35 @@ function mutacao(solver::NSGA)
     	for i in 1:tam
     		ω = rand()
     		if ω < solver.mr
-    			x = rand(1:tam)
-    			if ind.ativos[x] == 0
-    				era = 0
-    				ind.ativos[x] = 1
-    				filter!(b -> b≠x, bit0s) # remove o indice x do vetor de zeros
-    				push!(bit1s, x) 		 # adiciona o indice x no vetor de uns
-    			else
-    				era = 1
-    				ind.ativos[x] = 0
-    				filter!(b -> b≠x, bit1s) # remove o indice x do vetor de uns
-    				push!(bit0s, x) 		 # adiciona o indice x no vetor de zeros
-    			end
+    			# x = rand(1:tam)
+    			# if ind.ativos[x] == 0
+    			# 	era = 0
+    			# 	ind.ativos[x] = 1
+    			# 	filter!(b -> b≠x, bit0s) # remove o indice x do vetor de zeros
+    			# 	push!(bit1s, x) 		 # adiciona o indice x no vetor de uns
+    			# else
+    			# 	era = 1
+    			# 	ind.ativos[x] = 0
+    			# 	filter!(b -> b≠x, bit1s) # remove o indice x do vetor de uns
+    			# 	push!(bit0s, x) 		 # adiciona o indice x no vetor de zeros
+    			# end
 
-    			# reparar ativos
-    			if era == 0
-    				y = sample(bit1s)
-    				ind.ativos[y] = 0
-    				filter!(b -> b≠y, bit1s) # remove o indice y do vetor de uns
-    				push!(bit0s, y) 		 # adiciona o indice y no vetor de zeros
-    			else
-    				y = sample(bit0s)
-    				ind.ativos[y] = 1
-    				filter!(b -> b≠y, bit0s) # remove o indice y do vetor de zeros
-    				push!(bit1s, y) 		 # adiciona o indice y no vetor de uns
-    			end
+    			# # reparar ativos
+    			# if era == 0
+    			# 	y = sample(bit1s)
+    			# 	ind.ativos[y] = 0
+    			# 	filter!(b -> b≠y, bit1s) # remove o indice y do vetor de uns
+    			# 	push!(bit0s, y) 		 # adiciona o indice y no vetor de zeros
+    			# else
+    			# 	y = sample(bit0s)
+    			# 	ind.ativos[y] = 1
+    			# 	filter!(b -> b≠y, bit0s) # remove o indice y do vetor de zeros
+    			# 	push!(bit1s, y) 		 # adiciona o indice y no vetor de uns
+    			# end
+
+    			x = rand(1:tam)
+				ind.ativos[i], ind.ativos[x] = ind.ativos[x], ind.ativos[i]
+				ind.lotes[i], ind.lotes[x] = ind.lotes[x], ind.lotes[i]
 
     		end
     	end
@@ -253,7 +257,7 @@ function minha_mutacao(solver::NSGA, qnt_ativos)
 				x = ind.ativos[i]
 				while x in ind.ativos	x = rand(1:qnt_ativos)	end
 				ind.ativos[i] = x
-		
+				
 				# lotes
 				x = rand(1:tam)
 				pert = rand(d) / 100.0
