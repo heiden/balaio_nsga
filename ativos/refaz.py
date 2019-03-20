@@ -15,7 +15,7 @@ for a in arqs:
 		reader.next()
 		for linha in reader:
 			ano = int(linha[0].split('-')[0])
-			if ano == 2010:
+			if ano == 2015:
 				entradas_in_sample.append(linha)
 			else:
 				entradas_out_of_sample.append(linha)
