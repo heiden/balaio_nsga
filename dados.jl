@@ -70,11 +70,22 @@ function portfolio(β)
     return ativos, μ, risco
 end
 
-function plot(fronteira)
-	file = "pontos"
-	open(file, "a") do f # append = "a"
-		for ponto in fronteira
-			write(f, string(ponto[1]) * " " * string(ponto[2]) * "\n")
+function plot(fronteira, cardinalidade)
+	if length(ARGS) == 1
+		n = ARGS[1]
+		dir = "../stats/data/nsgal/" * string(cardinalidade) * "/"
+		file = dir * "pontos" * n
+		open(file, "w") do f # append = "a"
+			for ponto in fronteira
+				write(f, string(ponto[1]) * " " * string(ponto[2]) * "\n")
+			end
+		end
+	else
+		file = "pontos"
+		open(file, "a") do f # append = "a"
+			for ponto in fronteira
+				write(f, string(ponto[1]) * " " * string(ponto[2]) * "\n")
+			end
 		end
 	end
 	# run(`gnuplot plot.gnu`)

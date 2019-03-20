@@ -79,14 +79,14 @@ solver = NSGA(cx, mr, μ, σ, tam_pop, cardinalidade, pop)
 end
 pontos = fitness_populacao(solver)
 fronteiras, indices = nds(pontos)
-for i in indices[1]
-	println(solver.populacao[i])
-end
-for f in fronteiras[1]
-	println(f)
-end
+# for i in indices[1]
+# 	println(solver.populacao[i])
+# end
+# for f in fronteiras[1]
+# 	println(f)
+# end
 println("caras na fronteira ótima: ", length(fronteiras[1]))
-plot(fronteiras[1])
+plot(fronteiras[1], cardinalidade)
 
 
 # for x in solver.populacao println(x.ativos, " : ", sum(x.lotes)) end

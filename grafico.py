@@ -7,7 +7,7 @@ ax.set_title(titulo)
 ax.set_xlabel('risco')
 ax.set_ylabel('retorno')
 
-with open('outro') as arq:
+with open('pontos') as arq:
 	linhas = arq.readlines()
 	x = [float(linha.split()[0]) for linha in linhas]
 	y = [float(linha.split()[1]) for linha in linhas]
