@@ -28,7 +28,7 @@ end
 function μT(ativo, T)
 	rj = 0.0
 	for i in 2:T
-		rj += (ativo[i] - ativo[i-1])
+		rj += (log(ativo[i]) - log(ativo[i-1]))
 	end
 	μj = (1 / (T-1)) * rj
 	return μj
@@ -38,7 +38,7 @@ function cada_μ(ativo)
 	retornos = [0.0 for i = 1:length(ativo)]
 	retornos[1] = 0.0 # undefined value
 	for i in length(ativo):-1:2
-		retornos[i] = (ativo[i] - ativo[i-1]) / ativo[i]
+		retornos[i] = (log(ativo[i]) - log(ativo[i-1])) # / ativo[i-1]
 	end
 	return retornos[2:end]
 end
