@@ -91,3 +91,24 @@ function plot(fronteira, cardinalidade)
 	# run(`gnuplot plot.gnu`)
 	# run(`display portfolios.png`)
 end
+
+function portfolios_resposta(populacao, fronteira, cardinalidade)
+	if length(ARGS) == 1
+		n = ARGS[1]
+		dir = "../stats/out-of-sample/portfolios/nsgal/"
+		file = dir * "portfolios" * string(cardinalidade)
+		open(file, "a") do f # append = "a"
+			idx = 0
+			melhor = -1
+			for i in 1:length(fronteira)
+				p = fronteira[i]
+				razao = p[2] / p[1]
+				if razao > melhor
+					melhor = razao
+					idx = i
+				end
+			end
+			write(f, string(findall(isequal(1), populacao[idx].ativos)) * "\n" * string(filter(x -> x ≠ 0, populacao[idx].lotes)) * "\n\n")
+		end
+	end
+end

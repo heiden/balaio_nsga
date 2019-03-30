@@ -86,8 +86,8 @@ fronteiras, indices = nds(pontos)
 # 	println(f)
 # end
 println("caras na fronteira ótima: ", length(fronteiras[1]))
-plot(fronteiras[1], cardinalidade)
-
+# plot(fronteiras[1], cardinalidade)
+portfolios_resposta(solver.populacao, fronteiras[1], cardinalidade)
 
 # for x in solver.populacao println(x.ativos, " : ", sum(x.lotes)) end
 
